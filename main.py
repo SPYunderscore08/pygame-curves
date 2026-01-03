@@ -1,5 +1,6 @@
+from Window import *
 def main():
-    pass
+    window = Window(1000, 1000, "Drawing Curves")
 
 
 if __name__ == '__main__':
