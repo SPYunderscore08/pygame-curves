@@ -1,3 +1,5 @@
+import pygame.draw
+
 from Vector import *
 
 class Path:
@@ -9,15 +11,22 @@ class Path:
     def calculate_path(self) -> list:
         start_to_end_x = self.end.x - self.start.x
         start_to_end_y = self.end.y - self.start.y
-        starting_vector = Vector(Point(start_to_end_x, start_to_end_y))
-        calculation_vector = Vector(starting_vector.components)
+        calculation_vector = Vector(Point(start_to_end_x, start_to_end_y), self.start)
         line_list = []
         i = 0
-        while i < 10:
+        while i < 10:#calculation_vector.location != self.end:
+            print(calculation_vector.components.x)
+            print(calculation_vector.components.y)
+            print()
+            new_x = self.end.x - calculation_vector.location.x
+            new_y = self.end.y - calculation_vector.location.y
+            calculation_vector.components = Point(new_x, new_y)
+
             for point in self.control_points:
-                calculation_vector.add(point)
-            line_list.append((starting_vector.components.to_tuple(), calculation_vector.components.to_tuple()))
-            starting_vector = calculation_vector
+                calculation_vector.add(Point(point.x - calculation_vector.location.x, point.y - calculation_vector.location.y))
+
+            line_list.append((calculation_vector.location.to_tuple(), calculation_vector.components.to_tuple()))
+            calculation_vector.location = calculation_vector.components
             i += 1
 
         return line_list

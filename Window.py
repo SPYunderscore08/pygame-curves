@@ -1,5 +1,4 @@
 import pygame
-from pygame.draw_py import draw_line
 
 from Color import *
 from Path import *
@@ -25,7 +24,15 @@ class Window:
 
     def draw_path(self, path: Path):
         line_list = path.calculate_path()
+
+        pygame.draw.rect(self.screen, RED, path.start.to_tuple() + (5, 5), 5)
+        pygame.draw.rect(self.screen, RED, path.end.to_tuple() + (5, 5), 5)
+
+        for point in path.control_points:
+            pygame.draw.rect(self.screen, BLUE, point.to_tuple() + (5, 5), 5)
+
         for line in line_list:
             print(line)
             pygame.draw.line(self.screen, WHITE, line[0], line[1], 1)
-            pygame.display.flip()
+
+        pygame.display.flip()
