@@ -1,32 +1,37 @@
-import pygame.draw
-
 from Vector import *
+from Node import *
 
 class Path:
-    def __init__(self, start: Point, end: Point, control_points: list[Point]):
+    def __init__(self, start: Node, end: Node, node_vicinity):
         self.start = start
         self.end = end
-        self.control_points = control_points
+        self.node_vicinity = node_vicinity
+        self.nodes = [self.start, self.end]
 
-    def calculate_path(self) -> list:
-        start_to_end_x = self.end.x - self.start.x
-        start_to_end_y = self.end.y - self.start.y
-        calculation_vector = Vector(Point(start_to_end_x, start_to_end_y), self.start)
+    def calculate_path(self, precision: int) -> list: # percentual change; ratio is the parameter
+        start_to_end_x = self.end.position.x - self.start.position.x
+        start_to_end_y = self.end.position.y - self.start.position.y
+        calculation_vector = Vector(Point(start_to_end_x * precision, start_to_end_y * precision), self.start.position)
+
         line_list = []
-        i = 0
-        while i < 10:#calculation_vector.location != self.end:
-            print(calculation_vector.components.x)
-            print(calculation_vector.components.y)
-            print()
-            new_x = self.end.x - calculation_vector.location.x
-            new_y = self.end.y - calculation_vector.location.y
-            calculation_vector.components = Point(new_x, new_y)
 
-            for point in self.control_points:
-                calculation_vector.add(Point(point.x - calculation_vector.location.x, point.y - calculation_vector.location.y))
+        precision_counter = 0
 
-            line_list.append((calculation_vector.location.to_tuple(), calculation_vector.components.to_tuple()))
+        while precision_counter < precision:
+
+            for node in self.nodes:
+                calculation_vector.add(Point((node.position.x - calculation_vector.location.x) * precision, (node.position.y - calculation_vector.location.y) * precision))
+
+            calculation_vector.add(Point(precision, precision))
+
+            line_list.append(
+                (
+                    calculation_vector.location.to_tuple(),
+                    calculation_vector.components.to_tuple()
+                )
+            )
+
             calculation_vector.location = calculation_vector.components
-            i += 1
+            precision_counter += 1
 
         return line_list

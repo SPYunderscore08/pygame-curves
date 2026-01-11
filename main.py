@@ -1,16 +1,19 @@
-import threading
-import time
-from Window import *
-from Path import *
+from Simulation import *
+from Point import *
+from Node import *
 
 def main():
-    window = Window(1000, 1000, "Drawing Curves")
-    path = Path(Point(0, 0), Point(500, 500), [Point(12, 125)])
-    t1 = threading.Thread(target=window.run)
-    t2 = threading.Thread(target=window.draw_path, args=(path,))
-    t1.start()
-    time.sleep(0.02)
-    t2.start()
+    project = Simulation(
+        1000,
+        1000,
+        "Drawing curves, but cool",
+        Node(Point(0, 0)),
+        Node(Point(500, 500)),
+        15
+    )
+
+    project.start()
+
 
 if __name__ == '__main__':
     main()

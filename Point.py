@@ -4,4 +4,10 @@ class Point:
         self.y = y
 
     def to_tuple(self):
-        return (self.x, self.y)
+        return self.x, self.y
+
+    def subtract(self, point):
+        return Point(
+            self.x - point.x,
+            self.y - point.y
+        )

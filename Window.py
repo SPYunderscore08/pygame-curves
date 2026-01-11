@@ -3,6 +3,7 @@ import pygame
 from Color import *
 from Path import *
 
+
 class Window:
     def __init__(self, width: int, height: int, title: str):
         self.width = width
@@ -16,23 +17,19 @@ class Window:
         pygame.display.set_caption(self.title)
         self.screen.fill(BlACK)
 
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-
     def draw_path(self, path: Path):
-        line_list = path.calculate_path()
+        line_list = path.calculate_path(100)
 
-        pygame.draw.rect(self.screen, RED, path.start.to_tuple() + (5, 5), 5)
-        pygame.draw.rect(self.screen, RED, path.end.to_tuple() + (5, 5), 5)
+        self.screen.fill(BlACK)
 
-        for point in path.control_points:
-            pygame.draw.rect(self.screen, BLUE, point.to_tuple() + (5, 5), 5)
+        pygame.draw.rect(self.screen, RED, path.start.position.to_tuple() + (path.node_vicinity, path.node_vicinity))
+        pygame.draw.rect(self.screen, RED, path.end.position.to_tuple() + (path.node_vicinity, path.node_vicinity))
+        for node in path.nodes:
+            pygame.draw.rect(self.screen, BLUE, node.position.to_tuple() + (path.node_vicinity, path.node_vicinity))
 
         for line in line_list:
-            print(line)
-            pygame.draw.line(self.screen, WHITE, line[0], line[1], 1)
+            pass
+            #pygame.draw.line(self.screen, WHITE, line[0], line[1], 1)
 
         pygame.display.flip()
+
