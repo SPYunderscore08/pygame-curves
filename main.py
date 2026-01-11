@@ -1,5 +1,4 @@
 from Simulation import *
-from Point import *
 from Node import *
 
 def main():

@@ -6,8 +6,16 @@ class Point:
     def to_tuple(self):
         return self.x, self.y
 
+    def add(self, point):
+        return Point(
+            self.x + point.x,
+            self.y + point.y
+        )
+
     def subtract(self, point):
         return Point(
             self.x - point.x,
             self.y - point.y
         )
+
+
