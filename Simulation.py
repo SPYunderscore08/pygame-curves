@@ -29,8 +29,13 @@ class Simulation:
                     running = False
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    is_dragging = True
-                    dragging_node = self.alter_simulation()
+                    if event.button == 1:
+                        is_dragging = True
+                        dragging_node = self.alter_simulation()
+
+                    if event.button == 3:
+                        self.path.nodes.insert(Node(Point(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])), -2)
+                        self.window.draw_path(self.path)
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     is_dragging = False
