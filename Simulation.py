@@ -34,7 +34,7 @@ class Simulation:
                         dragging_node = self.alter_simulation()
 
                     if event.button == 3:
-                        self.path.nodes.insert(Node(Point(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])), -2)
+                        self.path.nodes.insert(-1, Node(Point(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])))
                         self.window.draw_path(self.path)
 
                 if event.type == pygame.MOUSEBUTTONUP:
@@ -64,7 +64,7 @@ class Simulation:
         position = Point(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])
 
         for node in self.path.nodes:
-            tmp_point = node.position.subtract(position)
+            tmp_point = node.position.subtract(position, True)
             if abs(tmp_point.x) <= self.path.node_vicinity // 2 and abs(tmp_point.y) <= self.path.node_vicinity // 2:
        #         node.position = position
                 return node

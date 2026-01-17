@@ -22,3 +22,6 @@ class Vector:
 
         self.components.x = avg_x
         self.components.y = avg_y
+
+    def __copy__(self):
+        return Vector(self.components, self.location)

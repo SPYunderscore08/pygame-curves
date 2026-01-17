@@ -6,7 +6,7 @@ def main():
         1000,
         1000,
         "Drawing curves, but cool",
-        Node(Point(0, 0)),
+        Node(Point(50, 50)),
         Node(Point(500, 500)),
         15
     )

@@ -8,30 +8,37 @@ class Path:
         self.node_vicinity = node_vicinity
         self.nodes = [self.start, self.end]
 
-    def calculate_path(self, precision: int) -> list: # percentual change; ratio is the parameter
-        start_to_end_x = self.end.position.x - self.start.position.x
-        start_to_end_y = self.end.position.y - self.start.position.y
-        calculation_vector = Vector(Point(start_to_end_x * precision, start_to_end_y * precision), self.start.position)
+    def calculate_path(self, precision: float) -> list: # percentual change; ratio is the parameter
+        percent_per_node = len(self.nodes) - 1
+        vector_list = []
+        forces = [] * percent_per_node
+        calculation_point = self.nodes[0].position
+        calculation_vector = Vector(Point(0, 0), Point(0, 0))
+        """
+        for count in range(precision):
+            calculation_vector = Vector(Point(0, 0), Point(0, 0))
+            for node in self.nodes[2:]:
+                calculation_vector.add(node.position.multiply(Point(count, count)))
 
-        line_list = []
+            vector_list.append(calculation_vector)
+        """
 
-        precision_counter = 0
+        calculation_point = self.nodes[0].position
+        calculation_vector = Vector(Point(0, 0), calculation_point)
 
-        while precision_counter < precision:
+        vector_list.append(
+            calculation_vector
+        )
 
-            for node in self.nodes:
-                calculation_vector.add(Point((node.position.x - calculation_vector.location.x) * precision, (node.position.y - calculation_vector.location.y) * precision))
+        return vector_list
 
-            calculation_vector.add(Point(precision, precision))
-
-            line_list.append(
-                (
-                    calculation_vector.location.to_tuple(),
-                    calculation_vector.components.to_tuple()
-                )
-            )
-
-            calculation_vector.location = calculation_vector.components
-            precision_counter += 1
-
-        return line_list
+    """
+    for _ in range(100):
+        vector.components reset to 0
+        
+        for node in nodes:
+            vector.components add with (node.position - vector.location multiply with "precision")
+            
+        vector.location add with vector.components
+        
+    """
