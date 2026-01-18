@@ -9,24 +9,29 @@ class Path:
         self.nodes = [self.start, self.end]
 
     def calculate_path(self, precision: float) -> list: # percentual change; ratio is the parameter
-        percent_per_node = len(self.nodes) - 1
         vector_list = []
-        forces = [] * percent_per_node
 
         calculation_point = self.nodes[0].position.__copy__()
         calculation_vector = Vector(calculation_point, calculation_point)
 
+        default_vector = Vector(self.nodes[-1].position, self.nodes[0].position)
+        mid_point = Vector.calculate_midpoint(default_vector)
+
+        constant_vector = default_vector.__copy__()
+        constant_vector.components.divide(Point(precision, precision)) # vector that is modified by the control points
+
         for node in self.nodes:
-            #mid_point = Vector.calculate_midpoint(calculation_vector)
 
+
+            #region visualisation
             vector_list.append(calculation_vector.__copy__())
-
             vector_list.append(
                 Vector(
                     node.position,
-                    Vector.calculate_midpoint(Vector(self.nodes[-1].position, self.nodes[0].position))
+                    mid_point
                 )
             )
+            #endregion visualisation
 
             calculation_vector.components = calculation_point.__copy__()
 
