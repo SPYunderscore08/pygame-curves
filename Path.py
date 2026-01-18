@@ -12,33 +12,22 @@ class Path:
         percent_per_node = len(self.nodes) - 1
         vector_list = []
         forces = [] * percent_per_node
-        calculation_point = self.nodes[0].position
-        calculation_vector = Vector(Point(0, 0), Point(0, 0))
-        """
-        for count in range(precision):
-            calculation_vector = Vector(Point(0, 0), Point(0, 0))
-            for node in self.nodes[2:]:
-                calculation_vector.add(node.position.multiply(Point(count, count)))
 
-            vector_list.append(calculation_vector)
-        """
+        calculation_point = self.nodes[0].position.__copy__()
+        calculation_vector = Vector(calculation_point, calculation_point)
 
-        calculation_point = self.nodes[0].position
-        calculation_vector = Vector(Point(0, 0), calculation_point)
+        for node in self.nodes:
+            #mid_point = Vector.calculate_midpoint(calculation_vector)
 
-        vector_list.append(
-            calculation_vector
-        )
+            vector_list.append(calculation_vector.__copy__())
+
+            vector_list.append(
+                Vector(
+                    node.position,
+                    Vector.calculate_midpoint(Vector(self.nodes[-1].position, self.nodes[0].position))
+                )
+            )
+
+            calculation_vector.components = calculation_point.__copy__()
 
         return vector_list
-
-    """
-    for _ in range(100):
-        vector.components reset to 0
-        
-        for node in nodes:
-            vector.components add with (node.position - vector.location multiply with "precision")
-            
-        vector.location add with vector.components
-        
-    """

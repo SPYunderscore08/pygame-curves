@@ -23,5 +23,9 @@ class Vector:
         self.components.x = avg_x
         self.components.y = avg_y
 
+    @staticmethod
+    def calculate_midpoint(self):
+        return self.components.subtract(self.location, True).divide(Point(2, 2)).add(self.location)
+
     def __copy__(self):
         return Vector(self.components, self.location)

@@ -27,13 +27,9 @@ class Point:
         return self
 
     def divide(self, point):
-        self.x = self.x / point.x
-        self.y = self.y / point.y
+        self.x /= point.x
+        self.y /= point.y
         return self
-
-    @staticmethod
-    def calculate_midpoint(start_point, end_point):
-        return end_point.subtract(start_point, True).divide(2, 2)
 
     def __copy__(self):
         return Point(

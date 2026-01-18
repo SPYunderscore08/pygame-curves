@@ -37,12 +37,12 @@ class Simulation:
                         self.path.nodes.insert(-1, Node(Point(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])))
                         self.window.draw_path(self.path)
 
+
                 if event.type == pygame.MOUSEBUTTONUP:
                     is_dragging = False
                     dragging_node = None
 
             if dragging_node is None and last_node is not None:
-                print("test")
                 self.window.draw_path(self.path)
                 last_node = None
 
@@ -73,6 +73,5 @@ class Simulation:
 
     def drag_node(self, node: Node):
         if not node is None:
-            print("test")
             self.window.draw_path(self.path, node)
             node.position = Point(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1])

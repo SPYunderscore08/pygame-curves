@@ -11,12 +11,10 @@ class Window:
         self.title = title
         self.screen = None
 
-
     def run(self):
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption(self.title)
         self.screen.fill(BlACK)
-
 
     def draw_path(self, path: Path, highlight_node = None):
         line_list = path.calculate_path(0.2)
@@ -26,7 +24,6 @@ class Window:
 
         self.screen.fill(BlACK)
 
-        print(path.start.position.subtract(vicinity_point, True))
         pygame.draw.rect(
             self.screen,
             GREEN,
@@ -46,10 +43,9 @@ class Window:
                 node.position.subtract(vicinity_point, True).to_tuple() + vicinity_tuple
             )
 
-
         for line in line_list:
             pygame.draw.line(self.screen, WHITE, line.location.to_tuple(), line.components.to_tuple(), 1)
-            #pygame.draw.line(self.screen, WHITE, line[0], line[1], 1)
+
         if highlight_node is not None:
             pygame.draw.rect(
                 self.screen,
