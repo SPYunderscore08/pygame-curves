@@ -14,11 +14,8 @@ class Path:
         calculation_point = self.nodes[0].position.__copy__()
         calculation_vector = Vector(calculation_point, calculation_point)
 
-        default_vector = Vector(self.nodes[-1].position, self.nodes[0].position)
+        default_vector = Vector(self.nodes[-1].position, calculation_point)
         mid_point = Vector.calculate_midpoint(default_vector)
-
-        constant_vector = default_vector.__copy__()
-        constant_vector.components.divide(Point(precision, precision)) # vector that is modified by the control points
 
         for node in self.nodes:
 
@@ -35,4 +32,21 @@ class Path:
 
             calculation_vector.components = calculation_point.__copy__()
 
+
+
+        calculation_point = self.nodes[0].position.__copy__()
+        calculation_vector = Vector(Point(0, 0), calculation_point)
+
+        mid_point = Vector.calculate_midpoint(Vector(self.nodes[0].position, self.nodes[-1].position))
+
+        x_vector = Vector(Point(0, 0))
+        y_vector = Vector(Point(0, 0))
+
+        for node in self.nodes[1:-1]:
+            calculation_point.add(calculation_vector.components)
+            calculation_vector.location = calculation_point
+
+
         return vector_list
+
+

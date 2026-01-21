@@ -3,7 +3,6 @@ import pygame
 from Color import *
 from Path import *
 
-
 class Window:
     def __init__(self, width: int, height: int, title: str):
         self.width = width
@@ -17,7 +16,7 @@ class Window:
         self.screen.fill(BlACK)
 
     def draw_path(self, path: Path, highlight_node = None):
-        line_list = path.calculate_path(0.2)
+        line_list = path.calculate_path(100)
 
         vicinity_point = Point(path.node_vicinity, path.node_vicinity).divide(Point(2, 2))
         vicinity_tuple = (path.node_vicinity, path.node_vicinity)
@@ -45,6 +44,14 @@ class Window:
 
         for line in line_list:
             pygame.draw.line(self.screen, WHITE, line.location.to_tuple(), line.components.to_tuple(), 1)
+
+
+        #mouse_pos = pygame.mouse.get_pos()
+        #for node in path.nodes[:-1]:
+        #    pygame.draw.line(self.screen, BLUE, node.position.to_tuple(), (mouse_pos[0], node.position.to_tuple()[1]))
+        #    pygame.draw.line(self.screen, RED, node.position.to_tuple(), (node.position.to_tuple()[0], mouse_pos[1]))
+
+
 
         if highlight_node is not None:
             pygame.draw.rect(
