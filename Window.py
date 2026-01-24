@@ -43,7 +43,7 @@ class Window:
             )
 
         for line in line_list:
-            pygame.draw.line(self.screen, WHITE, line.location.to_tuple(), line.components.to_tuple(), 1)
+            pygame.draw.line(self.screen, WHITE, line.location.to_tuple(), line.location.__copy__().subtract(line.vector).to_tuple(), 1)
 
 
         #mouse_pos = pygame.mouse.get_pos()
